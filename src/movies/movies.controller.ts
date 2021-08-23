@@ -8,34 +8,40 @@ import {
   Body,
   Query,
 } from '@nestjs/common';
+import { MoviesService } from './movies.service';
+import { Movie } from './entities/movie.entity';
 
 @Controller('movies')
 export class MoviesController {
+  // access to the service
+  constructor(private readonly moviesService: MoviesService) {}
+
   @Get()
-  getAll() {
-    return 'getAll';
+  getAll(): Movie[] {
+    return this.moviesService.getAll();
   }
 
   // the function order matters. we need to place this before search to make it believe that search isn't id. If the get(":id") is at the top, other get won't work.
-  @Get('search')
-  search(@Query('year') movieYear: number) {
-    return `searching for a movie made after ${movieYear}`;
-  }
+
+  // @Get('search')
+  // search(@Query('year') movieYear: number) {
+  //   return this.moviesService.search()
+  // }
 
   @Get(':id') // on NestJS, if you want sth, you must ask for it.
-  getOne(@Param('id') movieId: string) {
-    return `Movie with the id: ${movieId}`;
+  getOne(@Param('id') movieId: string): Movie {
+    return this.moviesService.getOne(movieId);
   }
 
   @Post()
   create(@Body() movieData) {
-    // console.log(movieData);
-    return movieData;
+    // console.log('controller', movieData);
+    return this.moviesService.create(movieData);
   }
 
   @Delete(':id')
   remove(@Param('id') movieId: string) {
-    return `Deleted the movie with the id: ${movieId}`;
+    return this.moviesService.deleteOne(movieId);
   }
 
   @Patch(':id') // updates some parts of the resource
