@@ -24,6 +24,8 @@
 
 ## Description
 
+This is based on Nomadcoder's course on NestJS.
+
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation
