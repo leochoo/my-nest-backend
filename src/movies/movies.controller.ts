@@ -6,7 +6,7 @@ import {
   Post,
   Patch,
   Body,
-  Query,
+  // Query,
 } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { Movie } from './entities/movie.entity';
@@ -34,7 +34,7 @@ export class MoviesController {
   }
 
   @Post()
-  create(@Body() movieData) {
+  create(@Body() movieData: Movie) {
     // console.log('controller', movieData);
     return this.moviesService.create(movieData);
   }
@@ -46,9 +46,6 @@ export class MoviesController {
 
   @Patch(':id') // updates some parts of the resource
   patch(@Param('id') movieId: string, @Body() updateMovieData) {
-    return {
-      updatedMovie: movieId,
-      ...updateMovieData,
-    };
+    return this.moviesService.update(movieId, updateMovieData);
   }
 }
