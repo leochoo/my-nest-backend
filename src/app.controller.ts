@@ -1,6 +1,6 @@
 import { Get, Controller } from '@nestjs/common';
 
-@Controller('app')
+@Controller('')
 export class AppController {
   @Get()
   home() {
