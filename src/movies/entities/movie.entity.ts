@@ -4,4 +4,8 @@ export class Movie {
   year: number;
   genres: string[];
   director: string;
+  reviews: {
+    positive: number;
+    negative: number;
+  };
 }

@@ -1,6 +1,15 @@
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  isNumber,
+  IsNumber,
+  IsObject,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateMovieDto {
+  @IsNumber()
+  readonly id: number;
+
   @IsString()
   readonly title: string;
 
@@ -14,4 +23,11 @@ export class CreateMovieDto {
   @IsOptional()
   @IsString()
   readonly director: string;
+
+  @IsOptional()
+  @IsObject()
+  readonly reviews: {
+    positive: number;
+    negative: number;
+  };
 }

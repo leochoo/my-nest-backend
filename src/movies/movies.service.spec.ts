@@ -5,6 +5,18 @@ import { MoviesService } from './movies.service';
 describe('MoviesService', () => {
   let service: MoviesService;
 
+  const sampleMovie = {
+    id: 1,
+    title: 'test movie',
+    year: 2020,
+    genres: ['test'],
+    director: 'Leonard Choo',
+    reviews: {
+      positive: 9.3,
+      negative: 0.4,
+    },
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [MoviesService],
@@ -26,12 +38,7 @@ describe('MoviesService', () => {
 
   describe('getOne()', () => {
     it('should return a movie', () => {
-      service.create({
-        title: 'test movie',
-        year: 2020,
-        genres: ['test'],
-        director: 'Leonard Choo',
-      });
+      service.create(sampleMovie);
 
       const movie = service.getOne(1);
       expect(movie).toBeDefined();
@@ -49,12 +56,7 @@ describe('MoviesService', () => {
 
   describe('deleteOne', () => {
     it('deletes a movie', () => {
-      service.create({
-        title: 'test movie',
-        year: 2020,
-        genres: ['test'],
-        director: 'Leonard Choo',
-      });
+      service.create(sampleMovie);
       const beforeDelete = service.getAll().length;
       service.deleteOne(1);
       const afterDelete = service.getAll().length;
@@ -72,12 +74,7 @@ describe('MoviesService', () => {
   describe('create', () => {
     it('should createa movie', () => {
       const beforeCreate = service.getAll().length;
-      service.create({
-        title: 'test movie',
-        year: 2020,
-        genres: ['test'],
-        director: 'Leonard Choo',
-      });
+      service.create(sampleMovie);
       const afterCreate = service.getAll().length;
       expect(afterCreate).toBeGreaterThan(beforeCreate);
     });
@@ -85,12 +82,7 @@ describe('MoviesService', () => {
 
   describe('update', () => {
     it('should update a movie', () => {
-      service.create({
-        title: 'test movie',
-        year: 2020,
-        genres: ['test'],
-        director: 'Leonard Choo',
-      });
+      service.create(sampleMovie);
       service.update(1, { title: 'Updated Title' });
       const movie = service.getOne(1);
       expect(movie.title).toEqual('Updated Title');
